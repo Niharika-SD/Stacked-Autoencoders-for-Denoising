@@ -62,11 +62,17 @@ costfin = @(p) finetune(p,inputSize,hiddenSizeL1,hiddenSizeL2,...
                                     lambda,patches,patches_noise);
                                 
 [opttheta,costfinal] = fmincg(costfin,init_theta,options);
+
+save('W1.mat','W1');
+save('W2.mat','W2');
+save('W3.mat','W3');
+
+
+save('b1.mat','b1');
+save('b2.mat','b2');
+save('b3.mat','b3');
 %%======================================================================
 %Prediction
-% testing_stage_exp2.m
-
-
-
+testing_stage_exp2.m
 
 %%======================================================================
