@@ -21,8 +21,9 @@
     end
     
     %img = imresize(img,0.25);
-    img =img(1:64,1:64);
+    %img =img(193:256,193:256);
     img_copy =img;
+    imwrite(img_copy,'original.tif')
     figure; subplot(2,2,1);
     imshow(img,[])
     title('original')
@@ -30,8 +31,8 @@
     %corrupting image
     img = mat2gray(img);
     img = im2double(img);
-    G = fspecial('gaussian',[3,3],1);
-    img = imfilter(img,G,'same');
+    %G = fspecial('gaussian',[3,3],1);
+    img = imnoise(img,'gaussian');
     img =imnoise(img,'speckle');
     subplot(2,2,2);
     imshow(img,[])
@@ -68,16 +69,16 @@
     %% Case 1 Taking average of input patches
     
 
-ahidden1 = bsxfun(@plus, W1 * out_norm, b1);
-activation1 = sigmoid(ahidden1);
+    ahidden1 = bsxfun(@plus, W1 * out_norm, b1);
+    activation1 = sigmoid(ahidden1);
 
-ahidden2 = bsxfun(@plus, W2 * activation1, b2);
-activation2 = sigmoid(ahidden2);
+    ahidden2 = bsxfun(@plus, W2 * activation1, b2);
+    activation2 = sigmoid(ahidden2);
 
-ahidden3 = bsxfun(@plus, W3 * activation2, b3);
-activation3 = sigmoid(ahidden3);
-
-output = activation3';
+    ahidden3 = bsxfun(@plus, W3 * activation2, b3);
+    activation3 = sigmoid(ahidden3);
+    
+    output = activation3';
     %create output image blocks
     output_s = zeros(size(output,1),sim_wind^2);
     %extracting only the corner block
@@ -199,7 +200,7 @@ output = activation3';
     title('corrupted')
     subplot(2,2,3);
     imshow(reshape(mean_p,size(img)),[])
-    title(' block mean')
+    title('mean')
     
     subplot(2,2,4);
     imshow(out_img',[])
